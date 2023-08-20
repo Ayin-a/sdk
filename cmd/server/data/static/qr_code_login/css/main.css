@@ -1,0 +1,14 @@
+.mini-login-container {
+    border-radius: 5px;
+    box-shadow: 0 0 10px 0 #339e2f;
+    background-image: linear-gradient(to bottom right, #aed84c , #03c01d);
+    overflow: hidden;
+    padding: 15px;
+    top: 30%;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+

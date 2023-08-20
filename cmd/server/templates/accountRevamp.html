@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Account Management</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+		/* General styles */
+		* {
+			box-sizing: border-box;
+		}
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			font-size: 16px;
+			line-height: 1.5;
+			color: #333;
+			margin: 0;
+			padding: 0;
+		}
+		h1 {
+			font-size: 32px;
+			font-weight: bold;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		/* Form styles */
+		form {
+			max-width: 600px;
+			margin: 0 auto;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			padding: 20px;
+			border-radius: 5px;
+		}
+		form label {
+			font-size: 18px;
+			font-weight: bold;
+			display: block;
+			margin-bottom: 10px;
+		}
+		form input[type="text"] {
+			font-size: 16px;
+			padding: 10px;
+			border-radius: 5px;
+			border: 1px solid #ccc;
+			margin-bottom: 20px;
+			width: 100%;
+		}
+		form button {
+			background-color: #4CAF50;
+			border: none;
+			border-radius: 5px;
+			color: #fff;
+			cursor: pointer;
+			font-size: 16px;
+			padding: 10px 20px;
+			transition: background-color 0.3s;
+			margin-top: 10px;
+			margin-right: 10px;
+		}
+		form button:hover {
+			background-color: #2E8B57;
+		}
+
+		/* Edit form styles */
+		#edit-account-form {
+			background-color: #fff;
+			border: 1px solid #ccc;
+			padding: 20px;
+			border-radius: 5px;
+			margin-top: 20px;
+		}
+		#edit-account-form h2 {
+			font-size: 24px;
+			font-weight: bold;
+			margin-bottom: 20px;
+		}
+
+		/* Result box styles */
+		#result {
+			max-width: 600px;
+			margin: 0 auto;
+			background-color: #fff;
+			border: 1px solid #ccc;
+			padding: 20px;
+			border-radius: 5px;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+<h1>账号修改</h1>
+<form id="account-form">
+	<label for="key">key:</label>
+	<input type="text" id="key" name="key" required>
+	<br>
+	<label for="username">用户名:</label>
+	<input type="text" id="username" name="username" required>
+	<br>
+	<button type="button" id="get-account">获取账号</button>
+	<button type="button" id="delete-account">删除账号（可以恢复）</button>
+	<label for="edit-email">邮箱地址:</label>
+	<input type="text" id="edit-email" name="edit-email" required>
+	<br>
+	<label for="edit-username">用户名:</label>
+	<input type="text" id="edit-username" name="edit-username" required>
+	<br>
+	<button type="button" id="save-changes">Save Changes</button>
+</form>
+
+
+		<div id="result"></div>
+
+<script>
+	const apiUrl = "/api/account/admin"; // Use a relative path
+
+	$("#get-account").on("click", () => {
+		const key = $("#key").val();
+		const username = $("#username").val();
+		const url = `${apiUrl}/${username}?key=${key}`;
+
+		$.ajax({
+			url: url,
+			type: "GET",
+			success: (data) => {
+				$("#result").html(JSON.stringify(data, null, 2));
+				// Fill the edit form with the fetched data
+				$("#edit-email").val(data.Email);
+				$("#edit-username").val(data.Username);
+				// Show the edit form
+				$("#edit-account-form").show();
+			},
+			error: (err) => {
+				$("#result").html("Error: " + err.responseText);
+			}
+		});
+	});
+
+	$("#delete-account").on("click", () => {
+		const key = $("#key").val();
+		const username = $("#username").val();
+		const url = `${apiUrl}/${username}?key=${key}`;
+
+		$.ajax({
+			url: url,
+			type: "DELETE",
+			success: () => {
+				$("#result").html("Account deleted successfully.");
+			},
+			error: (err) => {
+				$("#result").html("Error: " + err.responseText);
+			}
+		});
+	});
+
+	$("#save-changes").on("click", () => {
+		const key = $("#key").val();
+		const username = $("#username").val();
+		const newEmail = $("#edit-email").val();
+		const newUsername = $("#edit-username").val();
+		const url = `${apiUrl}/${username}/update?key=${key}`;
+
+		// Prepare the updated data
+		const updatedData = {
+			email: newEmail,
+			username: newUsername
+		};
+		$.ajax({
+			url: url,
+			type: "PUT",
+			contentType: "application/json",
+			data: JSON.stringify(updatedData),
+			success: () => {
+				$("#result").html("Account updated successfully.");
+				// Update the original form with the new username
+				$("#username").val(newUsername);
+				// Hide the edit form
+				$("#edit-account-form").hide();
+			},
+			error: (err) => {
+				$("#result").html("Error: " + err.responseText);
+			}
+		});},)
+
+</script>

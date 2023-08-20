@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {{ template "head" }}
+    <title>账号管理</title>
+    <script src="https://eichs.github.io/static/account/js/main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .content-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 500px; /* 修改了容器宽度 */
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .title {
+            text-align: center; /* 居中标题 */
+            font-weight: 500;
+            font-size: 24px;
+            color: #202124;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="textarea"] {
+            display: block;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            border: 1px solid rgb(102, 110, 84);
+            border-radius: 4px;
+        }
+
+        button {
+            display: block; /* 设置按钮为块级元素 */
+            width: 100%; /* 设置按钮宽度为100% */
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #ffffff;
+            background-color: #1AE8A0F0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        button:hover {
+            background-color: #1AE8A0F0;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .msg-box {
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #dc3545;
+            border-radius: 4px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .resetpasswd-container,
+        .remember-login-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .forget_pwd,
+        .register {
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+        }
+
+        .forget_pwd:hover,
+        .register:hover {
+            text-decoration: underline;
+        }
+
+        .debug-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="content-container">
+    <div class="container mini-login-container">
+        <div class="title">登录</div>
+        <div class="inputer-container">
+            <input id="username" placeholder="用户名" value="" type="text"/>
+            <input id="password" placeholder="密码" value="" type="password"/>
+        </div>
+        <div class="resetpasswd-container">
+            <div class="forget_pwd">忘记密码</div>
+        </div>
+        <div class="remember-login-status">
+            <input type="checkbox" value="false" />
+            <div>
+                记住登录状态5天
+            </div>
+        </div>
+        <button class="login">立即登录</button>
+        <button class="register">立即注册</button>
+    </div>
+
+    <div class="container mini-register-info-container" style="display:none;">
+        <div class="inputer-container">
+            <input id="email_addr" placeholder="邮箱地址" value="" type="text"/>
+            <button id="send_code">发送验证码</button>
+            <input id="sigin" placeholder="个人签名" value="" type="textarea"/>
+            <input id="email_verify_code" placeholder="验证码" value="" type="text"/>
+            <button class="register_now">立即注册</button>
+        </div>
+    </div>
+    <div class="container mini-reset-pwd-info-container" style="display:none;">
+        <div class="inputer-container">
+            <input id="r_username" placeholder="用户名" value="" type="text"/>
+            <input id="r_password" placeholder="输入密码" value="" type="text"/>
+            <button id="r_send_code">发送验证码</button>
+            <input id="r_email_verify_code" placeholder="验证码" value="" type="text"/>
+            <button class="change_pwd_now">立即修改</button>
+        </div>
+    </div>
+</div>
+<div class="debug-container"></div>
+</body>
+</html>

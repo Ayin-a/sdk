@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>配置信息管理</title>
+    <!-- 引入jQuery库 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- 设置视口 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* 常规样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        /* 布局样式 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-group input[type="text"], .form-group textarea {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-group button {
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 20px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .form-group button:hover {
+            background-color: #2E8B57;
+        }
+
+        /* 响应式布局样式 */
+        @media screen and (max-width: 767px) {
+            .container {
+                padding: 20px;
+            }
+
+            .container h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .form-group label {
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .form-group input[type="text"], .form-group textarea {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            .form-group button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+    <script>
+        function getConfig() {
+            var key = $("#key-input").val();
+            $.ajax({
+                url: "/api/getconfig?key=" + key,
+                type: "GET",
+                success: function(data) {
+                    $("#config-input").val(JSON.stringify(data, null, 2));
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("Failed to get config: " + errorThrown);
+                }
+            });
+        }
+
+        function saveConfig() {
+            var key = $("#key-input").val();
+            var config = JSON.parse($("#config-input").val());
+            $.ajax({
+                url: "/api/config?key=" + key,
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(config),
+                success: function(data) {
+                    alert("配置保存成功，已重启sdk加载配置！");
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("配置保存成功，已重启sdk加载配置！");
+                }
+            });
+        }
+    </script>
+</head>
+
+
+<div class="container">
+    <h1 class="text-center mb-5">配置信息管理</h1>
+    <div class="form-group row">
+        <label for="key-input" class="col-sm-2 col-form-label">Key：</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="key-input">
+        </div>
+    </div>
+    <div class="form-group text-center">
+        <button class="btn btn-primary" onclick="getConfig()">获取配置信息</button>
+    </div>
+    <div class="form-group">
+        <label for="config-input">Config：</label>
+        <textarea class="form-control" id="config-input" rows="20" cols="08"></textarea>
+        <div class="text-center mt-3">
+            <button class="btn btn-success" onclick="saveConfig()">保存配置信息</button>
+        </div>
+    </div>
+</div>
+</html>
+<body>

@@ -1,0 +1,18 @@
+{
+    "data": {
+        "area_wl": [
+            "KR"
+        ],
+        "disable_mmt": false,
+        "guardian_age_limit": 14,
+        "ip": {
+            "area_code": "86",
+            "country_code": "CN",
+            "language": "zh-cn"
+        },
+        "realname_wl": [],
+        "show_birthday": false
+    },
+    "message": "OK",
+    "retcode": 0
+}

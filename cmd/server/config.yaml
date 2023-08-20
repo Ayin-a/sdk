@@ -1,0 +1,30 @@
+autoSignUp: false
+DispatchList: http://127.0.0.1:7777/query_region_list
+eMailAddress: 587
+eMailAuthCode: 123456
+eMailHost: 123456.126.com
+eMailHostPort: 123
+loggingdir: log
+passsignin: false
+EnableGuest: false
+thirdparty: false
+accountLimit: 5
+accountTokenExp: 240
+ReloadTime: 100000000
+Geetest: false
+qrpayurl: http://192.168.3.35:22080/view/qr_code_pay
+sdkbaseurl: http://127.0.0.1:22080
+EnablePprof: false
+serverkey: 1234567
+accountkey: 123
+httpServer:
+    addr: 0.0.0.0:22080
+    enable: true
+    tls:
+        addr: 0.0.0.0:4433
+        certfile: data/keys/tls_cert.pem
+        enable: false
+        keyfile: data/keys/tls_key.pem
+database:
+    driver: mysql
+    dsn: root:123456@tcp(127.0.0.1:3306)/hk4e_test?charset=utf8
